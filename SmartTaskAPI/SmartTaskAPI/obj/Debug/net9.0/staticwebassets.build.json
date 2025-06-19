@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "wIi1QzHySqzAeXfHMmvRaGuoC4Wv2UCzS1pXL54HwHE=",
+  "Source": "SmartTaskAPI",
+  "BasePath": "_content/SmartTaskAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

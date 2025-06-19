@@ -12,5 +12,7 @@ namespace SmartTaskAPI.Models
         [Required]
         public string? PasswordHash { get; set; }
         public string? Role { get; set; } = "Member"; // "Admin", "User"
+        public ICollection<TaskItem>? Tasks { get; set; } 
+        public ICollection<Comment>? Comments { get; set; }
     }
 }
