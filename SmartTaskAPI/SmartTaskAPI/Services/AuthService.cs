@@ -27,7 +27,7 @@ namespace SmartTaskAPI.Services
                 FullName = request.FullName,
                 Email = request.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                Role = "Member"
+                Role = request.Role ?? "Member" 
             };
 
             _context.Users.Add(user);
