@@ -19,23 +19,51 @@ public class TasksController : ControllerBase
     }
     // GET: api/tasks
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TaskResponse>>> GetAll()
-    {
-        var tasks = await _context.Tasks
-                .Include(t => t.AssignedTo)
-                .Select(t => new TaskResponse
-                {
-                    Id = t.Id,
-                    Title = t.Title,
-                    Description = t.Description,
-                    Status = t.Status,
-                    DueDate = t.DueDate,
-                    AssignedTo = t.AssignedTo != null ? t.AssignedTo.FullName : null
-                })
-                .ToListAsync();
+    [HttpGet]
+public async Task<ActionResult<IEnumerable<TaskResponse>>> GetAll(
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10,
+    [FromQuery] string? status = null,
+    [FromQuery] string? search = null)
+{
+    var query = _context.Tasks
+        .Include(t => t.AssignedTo)
+        .AsQueryable();
 
-        return Ok(tasks);
-    }
+    // search filter
+    if (!string.IsNullOrWhiteSpace(search))
+        query = query.Where(t => t.Title.Contains(search));
+
+    // status filter
+    if (!string.IsNullOrWhiteSpace(status))
+        query = query.Where(t => t.Status == status);
+
+    //Pagination
+    var totalCount = await query.CountAsync();
+    var tasks = await query
+        .OrderByDescending(t => t.DueDate)
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+    var results = tasks.Select(t => new TaskResponse
+    {
+        Id = t.Id,
+        Title = t.Title,
+        Description = t.Description,
+        Status = t.Status,
+        DueDate = t.DueDate,
+        AssignedTo = t.AssignedTo?.FullName
+    });
+
+    return Ok(new
+    {
+        Total = totalCount,
+        Page = page,
+        PageSize = pageSize,
+        Results = results
+    });
+}
     // GET: api/tasks/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<TaskResponse>> GetById(int id)
