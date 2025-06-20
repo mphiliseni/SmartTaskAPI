@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddControllers();
+builder.Services.AddHttpClient();
+builder.Services.AddRazorPages();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -90,11 +92,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/Dashboard");
+    return Task.CompletedTask;
+});
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapRazorPages();
 
 app.Run();

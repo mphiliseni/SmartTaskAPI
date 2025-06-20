@@ -174,3 +174,5 @@
 /Users/mphilisenimhlongo/Projects/SmartTaskAPI/SmartTaskAPI/SmartTaskAPI/obj/Debug/net9.0/SmartTaskAPI.genruntimeconfig.cache
 /Users/mphilisenimhlongo/Projects/SmartTaskAPI/SmartTaskAPI/SmartTaskAPI/obj/Debug/net9.0/ref/SmartTaskAPI.dll
 /Users/mphilisenimhlongo/Projects/SmartTaskAPI/SmartTaskAPI/SmartTaskAPI/bin/Debug/net9.0/BCrypt.Net-Next.dll
+/Users/mphilisenimhlongo/Projects/SmartTaskAPI/SmartTaskAPI/SmartTaskAPI/obj/Debug/net9.0/SmartTaskAPI.RazorAssemblyInfo.cache
+/Users/mphilisenimhlongo/Projects/SmartTaskAPI/SmartTaskAPI/SmartTaskAPI/obj/Debug/net9.0/SmartTaskAPI.RazorAssemblyInfo.cs

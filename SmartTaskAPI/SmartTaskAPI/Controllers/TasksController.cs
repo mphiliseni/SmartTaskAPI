@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using SmartTaskAPI.Data;
 using SmartTaskAPI.DTOs.Tasks;
 using SmartTaskAPI.Models;
+using System.Security.Claims;
+
 
 namespace SmartTaskAPI.Controllers;
 
@@ -87,9 +89,39 @@ public async Task<ActionResult<IEnumerable<TaskResponse>>> GetAll(
 
         return Ok(result);
     }
+    
+    //New endpoint GetMyTasks
+    // GET: api/tasks/my
+
+    [HttpGet("my")]
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<TaskResponse>>> GetMyTasks()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+            return Unauthorized();
+
+        var tasks = await _context.Tasks
+            .Where(t => t.AssignedToId == int.Parse(userId))
+            .Include(t => t.AssignedTo)
+            .ToListAsync();
+
+        var results = tasks.Select(t => new TaskResponse
+        {
+            Id = t.Id,
+            Title = t.Title,
+            Description = t.Description,
+            Status = t.Status,
+            DueDate = t.DueDate,
+            AssignedTo = t.AssignedTo?.FullName
+        });
+
+        return Ok(results);
+    }
+
     // POST: api/tasks
     [HttpPost]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<ActionResult<TaskResponse>> Create(TaskRequest request)
     {
         var task = new TaskItem

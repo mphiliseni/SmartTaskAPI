@@ -1,0 +1,40 @@
+@page
+@model SmartTaskAPI.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2>Admin Dashboard</h2>
+
+<div class="row text-center mt-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white p-3 rounded shadow-sm">
+            <h4>Total Users</h4>
+            <h2>@Model.DashboardData.TotalUsers</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-secondary text-white p-3 rounded shadow-sm">
+            <h4>Total Tasks</h4>
+            <h2>@Model.DashboardData.TotalTasks</h2>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-warning text-dark p-3 rounded shadow-sm">
+            <h5>Pending</h5>
+            <h3>@Model.DashboardData.PendingTasks</h3>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-info text-white p-3 rounded shadow-sm">
+            <h5>In Progress</h5>
+            <h3>@Model.DashboardData.InProgressTasks</h3>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-success text-white p-3 rounded shadow-sm">
+            <h5>Completed</h5>
+            <h3>@Model.DashboardData.CompletedTasks</h3>
+        </div>
+    </div>
+</div>
